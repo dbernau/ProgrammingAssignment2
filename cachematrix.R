@@ -1,7 +1,7 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## Write a short comment describing this function
+## Logic for definition and initialization of the CacheMatrix Object.
 
 makeCacheMatrix <- function(x = matrix()) {
             inv <- NULL
@@ -19,17 +19,22 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+## Logic for checking if the inverted Matrix has already been calculated for a given CacheMatrix Object.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+        if (exists('x$getinverse')&&exists('x$setinverse')){
             inv <- x$getinverse()
             if(!is.null(inv)) {
                     message("getting cached data")
                     return(inv)
             }
             data <- x$get()
+            # Providing the inverse for a square matrix
             inv <- solve(data, ...)
             x$setinverse(inv)
             inv
+        } else {
+        	stop('x is not of type CacheMatrix')
+        }
     }
